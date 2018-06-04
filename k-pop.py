@@ -13,7 +13,11 @@ args = parser.parse_args()
 with open(args.pass_path) as passfile:
     password_list = passfile.read().splitlines()
 
+password_list = sorted(set(password_list))
+
 for password in password_list:
+    if len(password) < 1:
+        continue
     hash = ((sha1(password.encode('utf-8'))).hexdigest()).upper()
 
     url = ("https://api.pwnedpasswords.com/range/" + hash[0:5])
